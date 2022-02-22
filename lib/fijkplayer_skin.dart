@@ -432,7 +432,8 @@ class _CustomFijkPanelState extends State<CustomFijkPanel>
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.start,
                         children: <Widget>[
-                          _buildTopBackBtn(),
+                          // _buildTopBackBtn(),
+                          SizedBox(width: 16),
                           Expanded(
                             child: Container(
                               child: Text(
@@ -1305,7 +1306,8 @@ class _buildGestureDetectorState extends State<_buildGestureDetector> {
           height: barHeight,
           child: Row(
             children: <Widget>[
-              _buildTopBackBtn(),
+              // _buildTopBackBtn(),
+              SizedBox(width: 16),
               Expanded(
                 child: Container(
                   child: Text(
@@ -1474,12 +1476,12 @@ class _buildGestureDetectorState extends State<_buildGestureDetector> {
     return GestureDetector(
       onTap: _cancelAndRestartTimer,
       behavior: HitTestBehavior.opaque,
-      onHorizontalDragStart: _onHorizontalDragStart,
-      onHorizontalDragUpdate: _onHorizontalDragUpdate,
-      onHorizontalDragEnd: _onHorizontalDragEnd,
-      onVerticalDragStart: _onVerticalDragStart,
-      onVerticalDragUpdate: _onVerticalDragUpdate,
-      onVerticalDragEnd: _onVerticalDragEnd,
+      // onHorizontalDragStart: _onHorizontalDragStart,
+      // onHorizontalDragUpdate: _onHorizontalDragUpdate,
+      // onHorizontalDragEnd: _onHorizontalDragEnd,
+      // onVerticalDragStart: _onVerticalDragStart,
+      // onVerticalDragUpdate: _onVerticalDragUpdate,
+      // onVerticalDragEnd: _onVerticalDragEnd,
       child: AbsorbPointer(
         absorbing: _hideStuff,
         child: Column(
