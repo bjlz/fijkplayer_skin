@@ -4,6 +4,8 @@ import 'dart:math';
 import 'dart:ui';
 
 import 'package:fijkplayer/fijkplayer.dart';
+import 'package:fijkplayer_skin/widget_barrage_panel.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:wakelock/wakelock.dart';
 
@@ -59,6 +61,7 @@ class CustomFijkPanel extends StatefulWidget {
   final int curActiveIdx;
   final ShowConfigAbs showConfig;
   final VideoSourceFormat? videoFormat;
+  final String barrageText;
 
   CustomFijkPanel({
     required this.player,
@@ -71,6 +74,7 @@ class CustomFijkPanel extends StatefulWidget {
     required this.videoFormat,
     required this.curTabIdx,
     required this.curActiveIdx,
+    required this.barrageText,
   });
 
   @override
@@ -80,7 +84,9 @@ class CustomFijkPanel extends StatefulWidget {
 class _CustomFijkPanelState extends State<CustomFijkPanel>
     with TickerProviderStateMixin, AutomaticKeepAliveClientMixin {
   FijkPlayer get player => widget.player;
+
   ShowConfigAbs get showConfig => widget.showConfig;
+
   VideoSourceFormat get _videoSourceTabs => widget.videoFormat!;
 
   bool _lockStuff = lockStuff;
@@ -261,7 +267,7 @@ class _CustomFijkPanelState extends State<CustomFijkPanel>
       height: barHeight,
       alignment: Alignment.centerLeft,
       child: IconButton(
-        icon: Icon(Icons.arrow_back),
+        icon: Icon(CupertinoIcons.back),
         padding: EdgeInsets.only(
           left: 10.0,
           right: 10.0,
@@ -432,8 +438,8 @@ class _CustomFijkPanelState extends State<CustomFijkPanel>
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.start,
                         children: <Widget>[
-                          // _buildTopBackBtn(),
-                          SizedBox(width: 16),
+                          _buildTopBackBtn(),
+                          // SizedBox(width: 16),
                           Expanded(
                             child: Container(
                               child: Text(
@@ -605,7 +611,14 @@ class _CustomFijkPanelState extends State<CustomFijkPanel>
         );
       } else {
         ws.add(
-          _buildGestureDetector(
+          BarragePanel(
+            width: widget.viewSize.width,
+            height: widget.viewSize.height,
+            text: widget.barrageText,
+          ),
+        );
+        ws.add(
+          _GestureExtensionsLayer(
             curActiveIdx: widget.curActiveIdx,
             curTabIdx: widget.curTabIdx,
             onChangeVideo: widget.onChangeVideo,
@@ -641,7 +654,7 @@ class _CustomFijkPanelState extends State<CustomFijkPanel>
   bool get wantKeepAlive => true;
 }
 
-class _buildGestureDetector extends StatefulWidget {
+class _GestureExtensionsLayer extends StatefulWidget {
   final FijkPlayer player;
   final Size viewSize;
   final Rect texturePos;
@@ -654,7 +667,8 @@ class _buildGestureDetector extends StatefulWidget {
   final Function changeLockState;
   final ShowConfigAbs showConfig;
   final VideoSourceFormat? videoFormat;
-  _buildGestureDetector({
+
+  _GestureExtensionsLayer({
     Key? key,
     required this.player,
     required this.viewSize,
@@ -671,12 +685,14 @@ class _buildGestureDetector extends StatefulWidget {
   }) : super(key: key);
 
   @override
-  _buildGestureDetectorState createState() => _buildGestureDetectorState();
+  _GestureExtensionsLayerState createState() => _GestureExtensionsLayerState();
 }
 
-class _buildGestureDetectorState extends State<_buildGestureDetector> {
+class _GestureExtensionsLayerState extends State<_GestureExtensionsLayer> {
   FijkPlayer get player => widget.player;
+
   ShowConfigAbs get showConfig => widget.showConfig;
+
   VideoSourceFormat get _videoSourceTabs => widget.videoFormat!;
 
   Duration _duration = Duration();
@@ -727,7 +743,7 @@ class _buildGestureDetectorState extends State<_buildGestureDetector> {
   };
 
   // 初始化构造函数
-  _buildGestureDetectorState();
+  _GestureExtensionsLayerState();
 
   void initEvent() {
     // 设置初始化的值，全屏与半屏切换后，重设
@@ -1261,7 +1277,7 @@ class _buildGestureDetectorState extends State<_buildGestureDetector> {
   // 返回按钮
   Widget _buildTopBackBtn() {
     return IconButton(
-      icon: Icon(Icons.arrow_back),
+      icon: Icon(CupertinoIcons.back),
       padding: EdgeInsets.only(
         left: 10.0,
         right: 10.0,
@@ -1306,8 +1322,8 @@ class _buildGestureDetectorState extends State<_buildGestureDetector> {
           height: barHeight,
           child: Row(
             children: <Widget>[
-              // _buildTopBackBtn(),
-              SizedBox(width: 16),
+              _buildTopBackBtn(),
+              // SizedBox(width: 16),
               Expanded(
                 child: Container(
                   child: Text(
